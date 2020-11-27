@@ -9,8 +9,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.client.RestTemplate;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -26,9 +27,17 @@ public class CepController {
         if (cepObject != null) {
             return new ResponseEntity<>(new CepResponseDTO(cepRepository.getByCep(cep)), HttpStatus.OK);
         } else {
-            return new ResponseEntity<>(new ApiMessage("Registro não Encontrado"), HttpStatus.NOT_FOUND);
+            String url = "https://viacep.com.br/ws/" + cep + "/json/";
+            RestTemplate restTemplate = new RestTemplate();
+            try {
+                Cep cepResponse = restTemplate.getForObject(url, Cep.class);
+                this.cepRepository.save(cepResponse);
+                return new ResponseEntity<>(new CepResponseDTO(cepResponse), HttpStatus.OK);
+            } catch (HttpClientErrorException httpClientErrorException){
+                return new ResponseEntity<>(new ApiMessage(httpClientErrorException.getMessage()),
+                        httpClientErrorException.getStatusCode());
+            }
         }
-
     }
 
     @GetMapping
