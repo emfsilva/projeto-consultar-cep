@@ -1,6 +1,7 @@
 package io.github.emfsilva.projeto_culsulta_cep.model;
 
 import lombok.*;
+import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
@@ -10,6 +11,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @ToString
 @EqualsAndHashCode
 @Document(collection = "cep")
+@Accessors(chain = true)
 public class Cep {
     @Id
     private String id;
