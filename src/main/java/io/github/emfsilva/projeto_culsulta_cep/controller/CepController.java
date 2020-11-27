@@ -5,6 +5,7 @@ import io.github.emfsilva.projeto_culsulta_cep.dto.response.CepResponseDTO;
 import io.github.emfsilva.projeto_culsulta_cep.model.ApiMessage;
 import io.github.emfsilva.projeto_culsulta_cep.model.Cep;
 import io.github.emfsilva.projeto_culsulta_cep.repository.CepRepository;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -22,6 +23,7 @@ public class CepController {
     CepRepository cepRepository;
 
     @GetMapping("/{cep}")
+    @ApiOperation("Consulta endereço por CEP.")
     public ResponseEntity<Object> retornaCep(@PathVariable String cep) {
         Cep cepObject = cepRepository.getByCep(cep);
         if (cepObject != null) {
@@ -46,6 +48,7 @@ public class CepController {
     }
 
     @PostMapping
+    @ApiOperation("Envio de um novo CEP para salvar no banco.")
     public ResponseEntity<Object> cadastraCep(@RequestBody CepRequestDTO cepRequestDTO) {
         if (cepRequestDTO.getCep() == "" || cepRequestDTO.getCep() == null) {
             return new ResponseEntity<>(new ApiMessage("Favor informar o cep"), HttpStatus.BAD_REQUEST);
