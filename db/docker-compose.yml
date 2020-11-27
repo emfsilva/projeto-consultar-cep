@@ -24,7 +24,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - C:/Users/emersonfs/Documents/develop/projetoCEP/banco/MongoDB:/data/db
+      - C:/Users/emersonfs/Documents/workspace/bancos:/data/db
     networks:
       - mongo-compose-network
 

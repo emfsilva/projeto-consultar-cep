@@ -5,6 +5,7 @@ import lombok.experimental.Accessors;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -14,7 +15,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Accessors(chain = true)
 public class Cep {
     @Id
-    private String id;
     private String cep;
     private String logradouro;
     private String complemento;
